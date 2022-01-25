@@ -367,7 +367,7 @@
         "haskellNix": "haskellNix",
         "nixpkgs": [
           "haskellNix",
-          "nixpkgs"
+          "nixpkgs-2111"
         ],
         "pre-commit-hooks": "pre-commit-hooks"
       }

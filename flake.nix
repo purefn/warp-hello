@@ -11,7 +11,7 @@
 
     haskellNix.url = "github:input-output-hk/haskell.nix";
 
-    nixpkgs.follows = "haskellNix/nixpkgs";
+    nixpkgs.follows = "haskellNix/nixpkgs-2111";
 
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
