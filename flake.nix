@@ -9,9 +9,12 @@
 
     flake-utils.url = "github:numtide/flake-utils";
 
-    haskellNix.url = "github:input-output-hk/haskell.nix";
+    haskellNix = {
+      url = "github:input-output-hk/haskell.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    nixpkgs.follows = "haskellNix/nixpkgs-2111";
+    nixpkgs.url= "github:NixOS/nixpkgs/nixpkgs-21.11-darwin";
 
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
