@@ -11,10 +11,11 @@
 
     haskellNix = {
       url = "github:input-output-hk/haskell.nix";
+      # workaround for nix 2.6.0 bug
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixpkgs.url= "github:NixOS/nixpkgs/nixpkgs-21.11-darwin";
+    nixpkgs.follows = "haskellNix/nixpkgs-2111";
 
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };

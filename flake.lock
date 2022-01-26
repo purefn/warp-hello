@@ -247,18 +247,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1643125394,
-        "narHash": "sha256-zVF8edPlbwjL00kVhiBE0LR+Syb2IdYSIKpKdznVf2I=",
+        "lastModified": 1619531122,
+        "narHash": "sha256-ovm5bo6PkZzNKh2YGXbRKYIjega0EjiEP0YDwyeXEYU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "904464936aaf2f03111f84f1a58baf8bd1330979",
+        "rev": "bb80d578e8ad3cb5a607f468ac00cc546d0396dc",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-21.11-darwin",
-        "repo": "nixpkgs",
-        "type": "github"
+        "id": "nixpkgs",
+        "type": "indirect"
       }
     },
     "nixpkgs-2003": {
@@ -325,20 +323,6 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1619531122,
-        "narHash": "sha256-ovm5bo6PkZzNKh2YGXbRKYIjega0EjiEP0YDwyeXEYU=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "bb80d578e8ad3cb5a607f468ac00cc546d0396dc",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
     "old-ghc-nix": {
       "flake": false,
       "locked": {
@@ -359,7 +343,7 @@
     "pre-commit-hooks": {
       "inputs": {
         "flake-utils": "flake-utils_3",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
         "lastModified": 1639823344,
@@ -380,7 +364,10 @@
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "haskellNix": "haskellNix",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": [
+          "haskellNix",
+          "nixpkgs-2111"
+        ],
         "pre-commit-hooks": "pre-commit-hooks"
       }
     },
