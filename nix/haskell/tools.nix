@@ -3,7 +3,7 @@
 # instead, we configure them into the `devShell` directory so that
 # we can reuse the same versions for the pre-commit-hooks
 let
-  index-state = "2022-01-22T00:00:00Z";
+  index-state = "2022-02-01T00:00:00Z";
 
   # needs these overrides for ghc 9.0.2 so that exceptions and Cabal are reinstallable
   nonReinstallablePkgsModule =
@@ -85,14 +85,17 @@ in
     inherit index-state;
 
     version = "latest";
+    # pkg-def-extras =  [(h: { packages = { "hls-language-alternatenumberformat" = (((h.hls-language-alternatenumberformat)."latest").revisions).default; }; }) ];
     modules = [
-      {
-        # disabled because they require bumped versions of Cabal and ghc-lib-parser
-        # and we are using brittany anyways - although the hls-brittany-plugin is
-        # also disabled for ghc 9.0.2 in 1.5.1
-        packages.haskell-language-server.flags.ormolu = false;
-        packages.haskell-language-server.flags.fourmolu = false;
-      }
+      # ( { lib, ... }:
+      # {
+      # disabled because they require bumped versions of Cabal and ghc-lib-parser
+      # and we are using brittany anyways - although the hls-brittany-plugin is
+      # also disabled for ghc 9.0.2 in 1.5.1
+      # packages.haskell-language-server.flags.ormolu = false;
+      # packages.haskell-language-server.flags.fourmolu = false;
+      # packages.haskell-language-server.flags.alternatenumberformat = lib.mkForce false;
+      # })
       nonReinstallablePkgsModule
     ];
   };

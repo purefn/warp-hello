@@ -1,8 +1,11 @@
-* github action
+* github action (copy from warp-hello)
   * cachix
   * run materialization and commit
   * run `nix flake check`
   * run `nix develop`
+* add precommit hook to check the flake.lock is up to date
+  * should do it for both nix 2.5.1 and nix 2.6.0 because
+    they exhibit slightly different behavior
 
 Pain points
 -----------
