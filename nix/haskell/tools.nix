@@ -85,19 +85,7 @@ in
     inherit index-state;
 
     version = "latest";
-    # pkg-def-extras =  [(h: { packages = { "hls-language-alternatenumberformat" = (((h.hls-language-alternatenumberformat)."latest").revisions).default; }; }) ];
-    modules = [
-      # ( { lib, ... }:
-      # {
-      # disabled because they require bumped versions of Cabal and ghc-lib-parser
-      # and we are using brittany anyways - although the hls-brittany-plugin is
-      # also disabled for ghc 9.0.2 in 1.5.1
-      # packages.haskell-language-server.flags.ormolu = false;
-      # packages.haskell-language-server.flags.fourmolu = false;
-      # packages.haskell-language-server.flags.alternatenumberformat = lib.mkForce false;
-      # })
-      nonReinstallablePkgsModule
-    ];
+    modules = [ nonReinstallablePkgsModule ];
   };
   hlint = {
     inherit index-state;
