@@ -2,7 +2,6 @@
 }:
 
 let
-  # get the inputs out of `flake.lock`
-  flake = import ./nix/flake-compat.nix { inherit system; };
+  flake = builtins.getFlake (toString ./.);
 in
-flake.defaultNix.legacyPackages.${system}.warp-hello-project
+flake.legacyPackages.${system}.warp-hello-project
