@@ -19,8 +19,7 @@ jobs:
           name: purefn
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - run: echo $(uname -m)-$(uname -s) | tr '[:upper:]' '[:lower:]' | sed -E 's/^(.*)$/[ "\1" ]/' | tee supported-systems.nix
-      - run: $(nix-build -A plan-nix.passthru.calculateMaterializedSha) > nix/haskell/plan-sha256
-      - run: $(nix-build -A plan-nix.passthru.generateMaterialized) nix/haskell/materialized
+      - run: nix run .#update-materialized
       - uses: EndBug/add-and-commit@v8
         with:
           add: nix/haskell/plan-sha256 nix/haskell/materialized

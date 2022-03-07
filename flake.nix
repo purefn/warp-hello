@@ -30,6 +30,22 @@
           flake = pkgs.warp-hello-project.flake { };
           hsTools = pkgs.warp-hello-project.tools (import ./nix/haskell/tools.nix);
           pre-commit = pkgs.callPackage ./nix/pre-commit-hooks.nix { inherit pre-commit-hooks hsTools; };
+          update-materialized = pkgs.writeShellScriptBin "update-materialized" ''
+            set -euo pipefail
+
+            ${pkgs.warp-hello-project.plan-nix.passthru.calculateMaterializedSha} > nix/haskell/plan-sha256
+            ${pkgs.warp-hello-project.plan-nix.passthru.generateMaterialized} nix/haskell/materialized
+          '';
+
+          format = pkgs.writeShellScriptBin "format" ''
+            set -euo pipefail
+
+            PATH="${pkgs.lib.makeBinPath (with pkgs; [ git gnugrep findutils ] ++ pre-commit.shellBuildInputs)}"
+
+            git ls-files | grep -v ^nix/haskell/materialized | grep .nix$ | xargs nixpkgs-fmt
+            git ls-files | grep .hs$ | xargs brittany --write-mode inplace --config-file ${./brittany.yaml}
+            git ls-files | grep .cabal$ | xargs cabal-fmt --inplace
+          '';
         in
         nixpkgs.lib.recursiveUpdate flake {
           checks = {
@@ -80,15 +96,20 @@
             program = "${flake.packages."warp-hello:exe:warp-hello"}/bin/warp-hello";
           };
 
-          devShell =
-            let
-              update-materialized = pkgs.writeShellScriptBin "update-materialized" ''
-                set -euo pipefail
+          apps = {
+            update-materialized = {
+              type = "app";
+              program = "${update-materialized}/bin/update-materialized";
+            };
 
-                ${pkgs.warp-hello-project.plan-nix.passthru.calculateMaterializedSha} > nix/haskell/plan-sha256
-                ${pkgs.warp-hello-project.plan-nix.passthru.generateMaterialized} nix/haskell/materialized
-              '';
-            in
+            format = {
+              type = "app";
+              program = "${format}/bin/format";
+            };
+          };
+
+
+          devShell =
             flake.devShell.overrideAttrs (attrs: {
               inherit (pre-commit) shellHook;
 
